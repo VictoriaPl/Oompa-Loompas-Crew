@@ -9,3 +9,9 @@ export const API_URL =
 export const APP_PREFIX = "loompas";
 export const KEY_ITEMS = "items";
 export const KEY_LAST_PAGE = "lastPage";
+
+// APP STATE REDUCERS
+export const SET_PAGE = "SET_PAGE";
+export const SET_SUCCESS = "SET_SUCCESS";
+export const SET_ERROR = "SET_ERROR";
+export const SET_LOADING = "SET_LOADING";
