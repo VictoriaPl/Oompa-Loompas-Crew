@@ -10,6 +10,9 @@ export default function Item({ item }) {
           alt={"item"}
           className={"item-list-img"}
         />
+        <p>{item.name}</p>
+        <p>{item.gender}</p>
+        <p>{item.profession}</p>
       </Link>
     </div>
   );

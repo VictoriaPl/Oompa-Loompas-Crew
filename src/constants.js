@@ -9,9 +9,12 @@ export const API_URL =
 export const APP_PREFIX = "loompas";
 export const KEY_ITEMS = "items";
 export const KEY_LAST_PAGE = "lastPage";
+export const KEY_ITEM_ID = id => `${id}`;
 
 // APP STATE REDUCERS
 export const SET_PAGE = "SET_PAGE";
-export const SET_SUCCESS = "SET_SUCCESS";
+export const FETCH_ITEMS = "FETCH_ITEMS";
 export const SET_ERROR = "SET_ERROR";
 export const SET_LOADING = "SET_LOADING";
+
+export const SEARCH_KEYS = ["name", "profession"];

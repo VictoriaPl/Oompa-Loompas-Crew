@@ -1,38 +1,31 @@
-import Axios from "axios";
 import React, { useContext, useEffect } from "react";
 import {
   Route,
   BrowserRouter as Router,
   Switch,
 } from "react-router-dom";
-import { API_URL, KEY_ITEMS } from "../constants";
-import { AppContext, getPage, setError, setItems } from "../State";
+import { API_URL, KEY_ITEMS, KEY_LAST_PAGE } from "../constants";
+import { AppContext } from "../State";
 import Home from "./Home";
 import ItemDetail from "./ItemDetail";
 import Header from "../components/Header";
 import { localStorageGet } from "../utils/localstorage";
+import { useDataApi } from "../helpers/useDataApi";
 
 export default function Main() {
-  const { state, dispatch } = useContext(AppContext);
-  const page = getPage(state);
+  const { dispatch } = useContext(AppContext);
+  const { fetchItems } = useDataApi();
 
   useEffect(() => {
     //Get initial data if there are no items in local storage
     const items = localStorageGet(KEY_ITEMS);
     if (items) return;
 
-    Axios.get(`${API_URL}?page=${page}`)
-      .then(response =>
-        dispatch(
-          setItems(
-            response.data.results,
-            Boolean(response.data?.results?.length),
-            page
-          )
-        )
-      )
-      .catch(err => dispatch(setError(err)));
-  }, [dispatch, page]);
+    let page = localStorageGet(KEY_LAST_PAGE);
+    page = Number(page) ? Number(page) : 1;
+
+    fetchItems(`${API_URL}?page=${page}`, page);
+  }, [dispatch, fetchItems]);
 
   return (
     <Router>

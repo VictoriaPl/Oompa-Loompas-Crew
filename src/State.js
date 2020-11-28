@@ -1,7 +1,7 @@
 import React, { createContext } from "react";
 import {
   SET_PAGE,
-  SET_SUCCESS,
+  FETCH_ITEMS,
   SET_ERROR,
   SET_LOADING,
   KEY_ITEMS,
@@ -18,8 +18,8 @@ const reducer = (state, action) => {
         ...state,
         page: action.page,
       };
-    case SET_SUCCESS:
-      const items = state.items.concat(action.items);
+    case FETCH_ITEMS:
+      const items = [...state.items, ...action.items];
       localStorageSet(KEY_ITEMS, JSON.stringify(items));
       localStorageSet(KEY_LAST_PAGE, action.page);
 
@@ -43,31 +43,6 @@ const reducer = (state, action) => {
       return state;
   }
 };
-
-const logger = reducer => {
-  const reducerWithLogger = (state, action) => {
-    console.log(
-      "%cPrevious State:",
-      "color: #9E9E9E; font-weight: 700;",
-      state
-    );
-    console.log(
-      "%cAction:",
-      "color: #00A7F7; font-weight: 700;",
-      action
-    );
-    console.log(
-      "%cNext State:",
-      "color: #47B04B; font-weight: 700;",
-      reducer(state, action)
-    );
-    return reducer(state, action);
-  };
-
-  return reducerWithLogger;
-};
-
-// const loggerReducer = logger(reducer);
 
 const initialState = {
   page: 1,
@@ -106,8 +81,16 @@ export const setPage = page => ({
 });
 
 export const setItems = (items, hasMorePages, page) => ({
-  type: SET_SUCCESS,
-  items,
+  type: FETCH_ITEMS,
+  items: items.map(i => {
+    return {
+      id: i.id,
+      name: i.first_name,
+      image: i.image,
+      gender: i.gender,
+      profession: i.profession,
+    };
+  }),
   hasMorePages,
   page,
 });
@@ -129,5 +112,3 @@ export const hasError = state => state.hasError;
 
 export const getPage = state => state.page;
 export const getItems = state => state.items;
-export const getItemById = (state, id) =>
-  state.items.find(item => item.id === id);
