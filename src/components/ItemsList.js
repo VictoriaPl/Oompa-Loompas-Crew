@@ -1,10 +1,11 @@
 import React, { useCallback, useContext, useRef } from "react";
-import { API_URL, HEADER_LOGO, KEY_LAST_PAGE } from "../constants";
+import { API_URL, KEY_LAST_PAGE } from "../constants";
 import { AppContext, hasMorePages, setItems } from "../State";
 import { localStorageGet } from "../utils/localstorage";
 import Item from "./Item";
 import "./ItemsList.css";
 import { fetchItems } from "../helpers/FetchApiData";
+import InfoMessage from "./InfoMessage";
 
 export const ItemsList = ({ items }) => {
   const { state, dispatch } = useContext(AppContext);
@@ -48,34 +49,20 @@ export const ItemsList = ({ items }) => {
           </React.Fragment>
         ))
       ) : (
-        <div className='flex-column'>
-          <img
-            src={HEADER_LOGO}
-            alt='logo'
-            width={"20%"}
-            className='m-auto'
-          />
-          <h2 className='content-center'>
-            We could not get your Oompa Loompas!
-          </h2>
-          <p className='content-center gray'>
-            Try again later or check your connection to internet
-          </p>
-        </div>
+        <InfoMessage
+          title={"We could not get your Oompa Loompas!"}
+          extraInfo={
+            "Try again later or check your connection to internet"
+          }
+        />
       )}
       {!hasMore && (
-        <div className='flex-column'>
-          <img
-            src={HEADER_LOGO}
-            alt='logo'
-            width={"20%"}
-            className='m-auto'
-          />
-          <h2 className='content-center'>Uh Oh!</h2>
-          <p className='content-center gray'>
-            There are no more Oompa Loompas available at this moment!
-          </p>
-        </div>
+        <InfoMessage
+          title={"Uh Oh!"}
+          extraInfo={
+            "There are no more Oompa Loompas available at this moment!"
+          }
+        />
       )}
     </div>
   );
