@@ -34,28 +34,19 @@ export const ItemsList = ({ items }) => {
 
   return (
     <div className='items-list-wrapper'>
-      {items.length ? (
-        items.map(item => (
-          <React.Fragment key={item.id}>
-            {items.length - 3 === item.id ? (
-              <div className='item-list' ref={lastItemRef}>
-                <Item item={item} />
-              </div>
-            ) : (
-              <div className='item-list'>
-                <Item item={item} />
-              </div>
-            )}
-          </React.Fragment>
-        ))
-      ) : (
-        <InfoMessage
-          title={"We could not get your Oompa Loompas!"}
-          extraInfo={
-            "Try again later or check your connection to internet"
-          }
-        />
-      )}
+      {items.map(item => (
+        <React.Fragment key={item.id}>
+          {items.length - 3 === item.id ? (
+            <div className='item-list' ref={lastItemRef}>
+              <Item item={item} />
+            </div>
+          ) : (
+            <div className='item-list'>
+              <Item item={item} />
+            </div>
+          )}
+        </React.Fragment>
+      ))}
       {!hasMore && (
         <InfoMessage
           title={"Uh Oh!"}

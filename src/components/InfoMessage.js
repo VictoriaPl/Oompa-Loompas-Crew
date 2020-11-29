@@ -7,7 +7,7 @@ export default function InfoMessage({ title, extraInfo }) {
       <img
         src={HEADER_LOGO}
         alt='logo'
-        width={"20%"}
+        width={"15%"}
         className='m-auto'
       />
       <h2 className='content-center'>{title}</h2>

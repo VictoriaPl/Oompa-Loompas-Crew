@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { filterByValue } from "../components/Filter";
+import InfoMessage from "../components/InfoMessage";
 import { ItemsList } from "../components/ItemsList";
 import SearchBar from "../components/SearchBar";
 import { AppContext, getItems } from "../State";
@@ -20,7 +21,6 @@ export default function Home() {
       <div className='home-search-bar-wrapper'>
         <SearchBar handleChange={setSearchParam} />
       </div>
-
       {/* TITLE */}
       <div className='home-title-wrapper'>
         <p className='content-center m-0 home-title'>
@@ -30,9 +30,22 @@ export default function Home() {
           There are more than 100k
         </p>
       </div>
-
       {/* ITEMS */}
-      <ItemsList items={filteredItems} />
+      {filteredItems.length ? (
+        <ItemsList items={filteredItems} />
+      ) : !filteredItems.length && searchParam ? (
+        <InfoMessage
+          title={`No Oompa Loompas found with name or profession "${searchParam}"`}
+          extraInfo={"Remember to check your spelling and try again!"}
+        />
+      ) : (
+        <InfoMessage
+          title={"We could not get your Oompa Loompas!"}
+          extraInfo={
+            "Try again later or check your connection to internet"
+          }
+        />
+      )}
     </div>
   );
 }
