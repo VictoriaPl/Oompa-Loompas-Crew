@@ -1,14 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { Suspense } from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+import SplashScreen from "./components/SplashScreen";
+
+const App = React.lazy(() => import("./App"));
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Suspense fallback={<SplashScreen />}>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </Suspense>,
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -13,6 +13,7 @@ export default function Home() {
   const filteredItems = searchParam
     ? filterByValue(items, searchParam)
     : items;
+
   return (
     <div className='home-wrapper'>
       {/* SEARCH BAR */}
@@ -29,6 +30,7 @@ export default function Home() {
           There are more than 100k
         </p>
       </div>
+
       {/* ITEMS */}
       <ItemsList items={filteredItems} />
     </div>

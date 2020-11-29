@@ -5,16 +5,15 @@ import {
   Switch,
 } from "react-router-dom";
 import { API_URL, KEY_ITEMS, KEY_LAST_PAGE } from "../constants";
-import { AppContext } from "../State";
+import { AppContext, setError, setItems } from "../State";
 import Home from "./Home";
 import ItemDetail from "./ItemDetail";
 import Header from "../components/Header";
 import { localStorageGet } from "../utils/localstorage";
-import { useDataApi } from "../helpers/useDataApi";
+import { fetchItems } from "../helpers/FetchApiData";
 
 export default function Main() {
   const { dispatch } = useContext(AppContext);
-  const { fetchItems } = useDataApi();
 
   useEffect(() => {
     //Get initial data if there are no items in local storage
@@ -24,8 +23,10 @@ export default function Main() {
     let page = localStorageGet(KEY_LAST_PAGE);
     page = Number(page) ? Number(page) : 1;
 
-    fetchItems(`${API_URL}?page=${page}`, page);
-  }, [dispatch, fetchItems]);
+    fetchItems(`${API_URL}?page=${page}`)
+      .then(items => dispatch(setItems(items, page)))
+      .catch(err => dispatch(setError(err)));
+  }, [dispatch]);
 
   return (
     <Router>

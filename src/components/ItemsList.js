@@ -1,14 +1,13 @@
 import React, { useCallback, useContext, useRef } from "react";
-import { API_URL, KEY_LAST_PAGE } from "../constants";
-import { AppContext, hasMorePages } from "../State";
+import { API_URL, HEADER_LOGO, KEY_LAST_PAGE } from "../constants";
+import { AppContext, hasMorePages, setItems } from "../State";
 import { localStorageGet } from "../utils/localstorage";
-import { useDataApi } from "../helpers/useDataApi";
 import Item from "./Item";
 import "./ItemsList.css";
+import { fetchItems } from "../helpers/FetchApiData";
 
 export const ItemsList = ({ items }) => {
-  const { state } = useContext(AppContext);
-  const { fetchItems } = useDataApi();
+  const { state, dispatch } = useContext(AppContext);
   const observer = useRef();
   const hasMore = hasMorePages(state);
 
@@ -20,29 +19,64 @@ export const ItemsList = ({ items }) => {
           let page = localStorageGet(KEY_LAST_PAGE);
           page = Number(page) + 1;
 
-          fetchItems(`${API_URL}?page=${page}`, page);
+          const url = `${API_URL}?page=${page}`;
+
+          fetchItems(url)
+            .then(items => dispatch(setItems(items, page)))
+            .catch(err => dispatch(err));
         }
       });
       if (item) observer.current.observe(item);
     },
-    [hasMore, fetchItems]
+    [hasMore, dispatch]
   );
 
   return (
     <div className='items-list-wrapper'>
-      {items.length
-        ? items.map(item => (
-            <React.Fragment key={item.id}>
-              {items.length === item.id + 1 ? (
-                <div ref={lastItemRef}>
-                  <Item item={item} />
-                </div>
-              ) : (
+      {items.length ? (
+        items.map(item => (
+          <React.Fragment key={item.id}>
+            {items.length - 3 === item.id ? (
+              <div className='item-list' ref={lastItemRef}>
                 <Item item={item} />
-              )}
-            </React.Fragment>
-          ))
-        : "No Oompa Loompas"}
+              </div>
+            ) : (
+              <div className='item-list'>
+                <Item item={item} />
+              </div>
+            )}
+          </React.Fragment>
+        ))
+      ) : (
+        <div className='flex-column'>
+          <img
+            src={HEADER_LOGO}
+            alt='logo'
+            width={"20%"}
+            className='m-auto'
+          />
+          <h2 className='content-center'>
+            We could not get your Oompa Loompas!
+          </h2>
+          <p className='content-center gray'>
+            Try again later or check your connection to internet
+          </p>
+        </div>
+      )}
+      {!hasMore && (
+        <div className='flex-column'>
+          <img
+            src={HEADER_LOGO}
+            alt='logo'
+            width={"20%"}
+            className='m-auto'
+          />
+          <h2 className='content-center'>Uh Oh!</h2>
+          <p className='content-center gray'>
+            There are no more Oompa Loompas available at this moment!
+          </p>
+        </div>
+      )}
     </div>
   );
 };

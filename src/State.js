@@ -2,7 +2,6 @@ import React, { createContext } from "react";
 import {
   FETCH_ITEMS,
   SET_ERROR,
-  SET_LOADING,
   KEY_ITEMS,
   KEY_LAST_PAGE,
 } from "./constants";
@@ -13,7 +12,12 @@ export const AppContext = createContext();
 const reducer = (state, action) => {
   switch (action.type) {
     case FETCH_ITEMS:
-      const items = [...state.items, ...action.items];
+      const newItems = !state.items.find(
+        i => i.id === action.items[0].id
+      );
+      const items = newItems
+        ? [...state.items, ...action.items]
+        : state.items;
 
       localStorageSet(KEY_ITEMS, JSON.stringify(items));
       localStorageSet(KEY_LAST_PAGE, action.page);
@@ -22,8 +26,7 @@ const reducer = (state, action) => {
         ...state,
         items,
         page: action.page,
-        hasMorePages: action.hasMorePages,
-        loading: false,
+        hasMorePages: newItems,
         error: "",
       };
 
@@ -32,7 +35,6 @@ const reducer = (state, action) => {
         ...state,
         items: {},
         page: 1,
-        loading: false,
         error: action.error,
       };
     default:
@@ -44,7 +46,6 @@ const initialState = {
   page: 1,
   items: [],
   hasMorePages: true,
-  loading: false,
   error: null,
 };
 
@@ -71,10 +72,9 @@ export function AppContextProvider(props) {
 export const AppContextConsumer = AppContext.Consumer;
 
 //State action creators
-export const setItems = (items, hasMorePages, page) => ({
+export const setItems = (items, page) => ({
   type: FETCH_ITEMS,
   items: items,
-  hasMorePages,
   page,
 });
 
@@ -83,15 +83,8 @@ export const setError = error => ({
   error,
 });
 
-export const setLoading = loading => ({
-  type: SET_LOADING,
-  loading,
-});
-
 //State selectors
 export const hasMorePages = state => state.hasMorePages;
-export const isLoading = state => state.isLoading;
 export const hasError = state => state.hasError;
 
-export const getPage = state => state.page;
 export const getItems = state => state.items;

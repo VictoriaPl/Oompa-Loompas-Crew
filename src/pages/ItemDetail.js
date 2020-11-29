@@ -1,18 +1,14 @@
-import Axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { API_URL, KEY_ITEM_ID } from "../constants";
-import { AppContext, setError } from "../State";
 import parse from "react-html-parser";
-import {
-  localStorageGet,
-  localStorageSet,
-} from "../utils/localstorage";
+import { localStorageGet } from "../utils/localstorage";
 import ItemBasicInfo from "../components/ItemBasicInfo";
 import "./ItemDetail.css";
+import { fetchDetail } from "../helpers/FetchApiData";
+import Skeleton from "react-loading-skeleton";
 
 export default function ItemDetail() {
-  const { dispatch } = useContext(AppContext);
   const { id } = useParams();
   const [item, setItem] = useState({ id });
 
@@ -23,33 +19,22 @@ export default function ItemDetail() {
       setItem(itemDetail);
       return;
     }
-
-    Axios.get(`${API_URL}/${id}`)
-      .then(({ data }) => {
-        const detail = {
-          id: id,
-          name: data.first_name,
-          lastName: data.last_name,
-          image: data.image,
-          gender: data.gender,
-          profession: data.profession,
-          description: data.description,
-        };
-
-        localStorageSet(KEY_ITEM_ID(id), JSON.stringify(detail));
-        setItem({ id, ...detail });
-      })
-      .catch(err => dispatch(setError(err)));
-  }, [id, dispatch]);
+    // If the item is not in the localstorage we fetch it from the API
+    fetchDetail(`${API_URL}/${id}`, id)
+      .then(detail => setItem(detail))
+      .catch(err => err);
+  }, [id]);
 
   return (
     <div className='item-detail-wrapper'>
       <div className='item-detail-img-wrapper'>
-        <img
-          alt='itemDetail'
-          src={item.image}
-          className='item-detail-img'
-        />
+        {(item.image && (
+          <img
+            src={item.image}
+            alt='item'
+            className='item-detail-img'
+          />
+        )) || <Skeleton height={100} />}
       </div>
       <div className='item-detail-info'>
         <ItemBasicInfo

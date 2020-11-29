@@ -13,6 +13,15 @@ p {
   justify-content: center;
 }
 
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.m-auto {
+  margin: auto;
+}
+
 .m-0 {
   margin: 0
 }
@@ -28,4 +37,3 @@ p {
 .font-sm {
   font-size: 14px;
 }
-
