@@ -8,6 +8,8 @@ import {
   localStorageGet,
   localStorageSet,
 } from "../utils/localstorage";
+import ItemBasicInfo from "../components/ItemBasicInfo";
+import "./ItemDetail.css";
 
 export default function ItemDetail() {
   const { dispatch } = useContext(AppContext);
@@ -41,14 +43,24 @@ export default function ItemDetail() {
   }, [id, dispatch]);
 
   return (
-    <div>
-      <h1>
-        Say hello to {item.name} {item.lastName}
-      </h1>
-      <img width={"40%"} alt='itemDetail' src={item.image} />
-      <p>{item.gender}</p>
-      <p>{item.profession}</p>
-      {parse(item.description)}
+    <div className='item-detail-wrapper'>
+      <div className='item-detail-img-wrapper'>
+        <img
+          alt='itemDetail'
+          src={item.image}
+          className='item-detail-img'
+        />
+      </div>
+      <div className='item-detail-info'>
+        <ItemBasicInfo
+          name={item.name}
+          gender={item.gender}
+          profession={item.profession}
+        />
+        <div className='item-detail-description'>
+          {parse(item.description)}
+        </div>
+      </div>
     </div>
   );
 }

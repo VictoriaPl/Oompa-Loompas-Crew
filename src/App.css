@@ -1,4 +1,13 @@
-/* GENERAL */
+/* GENERAL STYLES*/
+a {
+  text-decoration: none;
+  color: black;
+}
+
+p {
+  text-align: justify;
+}
+
 .content-center {
   display: flex;
   justify-content: center;
@@ -8,44 +17,15 @@
   margin: 0
 }
 
-/* HEADER */
-.header {
-  display: flex;
-  align-items: center;
-  background: lightgray;
-  padding: 0.5rem 4rem;
+.italic {
+  font-style: italic;
 }
 
-.header-logo {
-  width: 1.5rem;
-  cursor: pointer;
-  margin-right: 1.5rem;
+.gray {
+  color: gray
 }
 
-/* HOME VIEW */
-.home-title-wrapper {
-  padding: 5%;
+.font-sm {
+  font-size: 14px;
 }
 
-.home-title {
-  font-size: 2.5rem;
-}
-
-.home-subtitle {
-  color: gray;
-  font-size: 2rem;
-}
-
-.home-list-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.item-list {
-  width: 30%;
-}
-
-.item-list-img {
-  width: 100%;
-}

@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { filterByValue } from "../components/Filter";
 import { ItemsList } from "../components/ItemsList";
+import SearchBar from "../components/SearchBar";
 import { AppContext, getItems } from "../State";
-// import "./Home.css";
+import "./Home.css";
 
 export default function Home() {
   const { state } = useContext(AppContext);
@@ -13,13 +14,12 @@ export default function Home() {
     ? filterByValue(items, searchParam)
     : items;
   return (
-    <div>
+    <div className='home-wrapper'>
       {/* SEARCH BAR */}
-      <input
-        type='text'
-        placeholder={"search"}
-        onChange={e => setSearchParam(e.target.value)}
-      />
+      <div className='home-search-bar-wrapper'>
+        <SearchBar handleChange={setSearchParam} />
+      </div>
+
       {/* TITLE */}
       <div className='home-title-wrapper'>
         <p className='content-center m-0 home-title'>

@@ -1,6 +1,5 @@
 import React, { createContext } from "react";
 import {
-  SET_PAGE,
   FETCH_ITEMS,
   SET_ERROR,
   SET_LOADING,
@@ -13,13 +12,9 @@ export const AppContext = createContext();
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case SET_PAGE:
-      return {
-        ...state,
-        page: action.page,
-      };
     case FETCH_ITEMS:
       const items = [...state.items, ...action.items];
+
       localStorageSet(KEY_ITEMS, JSON.stringify(items));
       localStorageSet(KEY_LAST_PAGE, action.page);
 
@@ -31,6 +26,7 @@ const reducer = (state, action) => {
         loading: false,
         error: "",
       };
+
     case SET_ERROR:
       return {
         ...state,
@@ -75,22 +71,9 @@ export function AppContextProvider(props) {
 export const AppContextConsumer = AppContext.Consumer;
 
 //State action creators
-export const setPage = page => ({
-  type: SET_PAGE,
-  page,
-});
-
 export const setItems = (items, hasMorePages, page) => ({
   type: FETCH_ITEMS,
-  items: items.map(i => {
-    return {
-      id: i.id,
-      name: i.first_name,
-      image: i.image,
-      gender: i.gender,
-      profession: i.profession,
-    };
-  }),
+  items: items,
   hasMorePages,
   page,
 });

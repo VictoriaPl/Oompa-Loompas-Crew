@@ -1,0 +1,38 @@
+h1 {
+   text-align: start;
+}
+
+.item-detail-wrapper {
+   display: flex;
+   width: 80%;
+   margin: auto;
+   height: 50vh;
+   padding: 5%;
+}
+
+.item-detail-img-wrapper {
+   width: 60%;
+   overflow: hidden;
+}
+
+.item-detail-img {
+   display: inline-block;
+   width: 100%;
+   margin-top: -10%;
+}
+
+.item-detail-img:hover{
+   transition: transform 1s, filter 2s ease-in-out;
+   transform: scale(0.7);
+}
+
+.item-detail-info {
+   width: 40%;
+   margin: 0% 3%;
+}
+
+.item-detail-description {
+   text-align: justify;
+   margin-top: 5%;
+   line-height: 1.5rem;
+}

@@ -1,0 +1,17 @@
+.header {
+   background: lightgray;
+ }
+ 
+ .header-container {
+   display: flex;
+   align-items: center;
+   width: 80%;
+   margin: auto;
+   padding: 1%;
+ }
+ 
+ .header-logo {
+   width: 2rem;
+   cursor: pointer;
+   margin-right: 1.5rem;
+ }

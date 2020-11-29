@@ -4,6 +4,7 @@ import { AppContext, hasMorePages } from "../State";
 import { localStorageGet } from "../utils/localstorage";
 import { useDataApi } from "../helpers/useDataApi";
 import Item from "./Item";
+import "./ItemsList.css";
 
 export const ItemsList = ({ items }) => {
   const { state } = useContext(AppContext);
@@ -28,7 +29,7 @@ export const ItemsList = ({ items }) => {
   );
 
   return (
-    <div className='home-list-wrapper'>
+    <div className='items-list-wrapper'>
       {items.length
         ? items.map(item => (
             <React.Fragment key={item.id}>
