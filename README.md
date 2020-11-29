@@ -2,6 +2,9 @@
 
 Oompa Loompa's Crew it's a visualization tool with all the awesome workers of Willy Wonka. You can see information about them and search them by name or profession to know if any can be your new most eficient employee.
 
+![Alt text](./public/preview1.png)
+![Alt text](./public/preview2.png)
+
 ## How it works?
 
 It uses the React library and it's popular new feature, React Hooks, with some methods as useContext and useReducer to manage a global state. It also saves in localStorage the information that has been fetch with the Oompa Loompa's API. It has an infinite scroll that is managed by the Intersection Observer API and some loading styles with react-loading-skeleton.
