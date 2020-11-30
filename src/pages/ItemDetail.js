@@ -34,7 +34,11 @@ export default function ItemDetail() {
             alt='item'
             className='item-detail-img'
           />
-        )) || <Skeleton height={100} />}
+        )) || (
+          <div data-testid='loadingImg'>
+            <Skeleton height={100} />
+          </div>
+        )}
       </div>
       <div className='item-detail-info'>
         <ItemBasicInfo
