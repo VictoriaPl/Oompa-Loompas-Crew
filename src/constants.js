@@ -17,5 +17,5 @@ export const KEY_ITEM_ID = id => `${id}`;
 export const FETCH_ITEMS = "FETCH_ITEMS";
 export const SET_ERROR = "SET_ERROR";
 
-export const SEARCH_KEYS = ["name", "profession"];
+export const SEARCH_KEYS = ["name", "profession", "lastName"];
 export const GENDER = value => (value === "F" ? "Woman" : "Man");

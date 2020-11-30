@@ -10,6 +10,7 @@ export const fetchItems = url =>
         return {
           id: i.id,
           name: i.first_name,
+          lastName: i.last_name,
           image: i.image,
           gender: i.gender,
           profession: i.profession,

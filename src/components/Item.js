@@ -11,6 +11,7 @@ export default function Item({ item }) {
       <div className={"item-list-info"}>
         <ItemBasicInfo
           name={item.name}
+          lastName={item.lastName}
           gender={item.gender}
           profession={item.profession}
         />

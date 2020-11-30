@@ -43,6 +43,7 @@ export default function ItemDetail() {
       <div className='item-detail-info'>
         <ItemBasicInfo
           name={item.name}
+          lastName={item.lastName}
           gender={item.gender}
           profession={item.profession}
         />
